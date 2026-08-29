@@ -35,7 +35,6 @@ let no2=parseFloat(document.getElementById('no2').value)||0;
 let o3=parseFloat(document.getElementById('o3').value)||0;
 let pm10=parseFloat(document.getElementById('pm10').value)||0;
 let so2=parseFloat(document.getElementById('so2').value)||0;
-// Approx formula from your RandomForest learning
 let pm25 = (pm10*0.5 + co*0.02 + no2*0.3 + so2*0.2 + nh3*0.1 + o3*0.15);
 let cat="", cls="";
 if(pm25<=30){cat="GOOD - Air is Clean!";cls="good"}
