@@ -35,10 +35,9 @@ print(f"MAE: {mean_absolute_error(y_test, pred):.2f}")
 print(f"R2 Score: {r2_score(y_test, pred):.3f}")
 print("Model trained on WHOLE INDIA data!")
 
-# Save
 import joblib
 joblib.dump(model, "aqi_model.pkl")
 
 pd.DataFrame({'Actual': y_test, 'Predicted': pred}).to_csv("predictions.csv", index=False)
-print("Saved: aqi_model.pkl and predictions.csv")
+print("aqi_model.pkl and predictions.csv")
 print("YOU CAN NOW PREDICT ANY CITY!")
