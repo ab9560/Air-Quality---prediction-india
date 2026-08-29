@@ -11,7 +11,7 @@ ML model to predict PM2.5 / AQI for any city in India. MAE: 16.34
 
 ### Tech Stack
 - Python, Pandas, Scikit-Learn, RandomForest
-- HTML, CSS
+- HTML, CSS and javascript.
 - GitHub Pages
 
 ###  Files
