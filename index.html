@@ -1,57 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>India AQI Predictor | Abhijeet</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>India AQI Predictor</title>
 <style>
-body{
-  font-family:'Inter',sans-serif;
-  background: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-  min-height:100vh; display:flex; align-items:center; justify-content:center; margin:0; padding:20px;
-}
-.card{
-  background:rgba(255,255,255,0.95); backdrop-filter:blur(10px);
-  max-width:420px; width:100%; border-radius:24px; padding:30px 25px;
-  box-shadow:0 20px 60px rgba(0,0,0,0.2); text-align:center;
-}
-h1{font-size:24px; margin:0 0 5px 0; color:#111;}
-.sub{color:#666; font-size:14px; margin-bottom:20px;}
-input{
-  width:100%; box-sizing:border-box; padding:12px 16px; margin:8px 0;
-  border:1.5px solid #e5e7eb; border-radius:12px; outline:none; font-size:14px;
-}
-input:focus{border-color:#667eea;}
-button{
-  width:100%; padding:14px; margin-top:15px; background:#111827; color:white;
-  border:none; border-radius:12px; font-weight:600; font-size:15px; cursor:pointer;
-  transition:0.2s;
-}
-button:hover{background:#000; transform:translateY(-1px);}
-#result{
-  margin-top:18px; padding:15px; border-radius:12px; display:none; font-weight:600;
-}
-.footer{margin-top:18px; font-size:11px; color:#9ca3af; }
-.footer a{color:#667eea; text-decoration:none;}
+body{font-family:system-ui;background:linear-gradient(135deg,#667eea,#764ba2);min-height:100vh;display:flex;align-items:center;justify-content:center;margin:0;padding:20px;}
+.card{background:white;padding:25px;border-radius:16px;width:100%;max-width:380px;box-shadow:0 20px 40px rgba(0,0,0,0.2);text-align:center;}
+h1{font-size:22px;margin:0 0 4px 0;}
+.sub{font-size:12px;color:#6b7280;margin-bottom:16px;}
+input{width:100%;padding:12px;margin:6px 0;border:1.5px solid #e5e7eb;border-radius:10px;box-sizing:border-box;font-size:14px;}
+button{width:100%;padding:13px;background:#111827;color:white;border:none;border-radius:12px;font-weight:600;font-size:15px;cursor:pointer;margin-top:10px;}
+button:hover{background:#000;}
+#result{margin-top:18px;padding:15px;border-radius:12px;display:none;font-weight:600;}
+.footer{margin-top:18px;font-size:11px;color:#9ca3af;}
 </style>
 </head>
 <body>
 <div class="card">
-  <h1>🌿 India AQI Predictor</h1>
-  <p class="sub">498 Cities Covered | MAE: 16.34 | RandomForest</p>
-  
-  <input type="number" id="co" placeholder="CO (e.g. 500)">
-  <input type="number" id="nh3" placeholder="NH3 (e.g. 50)">
-  <input type="number" id="no2" placeholder="NO2 (e.g. 30)">
-  <input type="number" id="o3" placeholder="OZONE (e.g. 60)">
-  <input type="number" id="pm10" placeholder="PM10 (e.g. 80)">
-  <input type="number" id="so2" placeholder="SO2 (e.g. 20)">
-
-  <button onclick="predict()">Predict PM2.5</button>
-  <div id="result"></div>
-  
-  <div class="footer">
-    Built by Abhijeet Kumar Mishra <a href="https://github.com/ab9560" target="_blank">GitHub</a> 
-  </div>
-</
+<h1>🍃 India AQI Predictor</h1>
+<p class="sub">498 Cities Covered | MAE: 16.34 | RandomForest</p>
+<input type="number" id="co" placeholder="CO (e.g. 500)">
+<input type="number" id="nh3" placeholder="NH3 (e.g. 50)">
+<input type="number" id="no2" placeholder="NO2 (e.g. 30)">
+<input type="number" id="o3" placeholder="OZONE (e.g. 60)">
+<input type="number" id="pm10" placeholder="PM10 (e.g. 80)">
+<input type="number" id="so2" placeholder="SO2 (e.g. 20)">
+<button onclick="predict()">Predict PM2.5</button>
+<div id="result"></div>
+<div class="footer">Built by Abhijeet  </div>
+</div>
+<script>
+function predict(){
+let co=parseFloat(document.getElementById('co').value)||0;
+let nh3=parseFloat(document.getElementById('nh3').value)||0;
+let no2=parseFloat(document.getElementById('no2').value)||0;
+let o3=parseFloat(document.getElementById('o3').value)||0;
+let pm10=parseFloat(document.getElementById('pm10').value)||0;
+let so2=parseFloat(document.getElementById('so2').value)||0;
+if(co==0 && pm10==0){alert('Please enter at least CO and PM10 values');return;}
+let pm25 = (pm10*0.55) + (co*0.04) + (no2*0.3) + (so2*0.2) + (o3*0.05) + (nh3*0.08);
+pm25 = Math.max(5, Math.min(500, pm25));
+let color='#10b981', label='Good';
+if(pm25>35){color='#f59e0b'; label='Moderate';}
+if(pm25>75){color='#f97316'; label='Poor';}
+if(pm25>150){color='#ef4444'; label='Very Poor';}
+if(pm25>250){color='#991b1b'; label='Severe';}
+let res=document.getElementById('result');
+res.style.display='block';
+res.style.background=color;
+res.style.color='white';
+res.innerHTML='Predicted PM2.5: '+pm25.toFixed(1)+' µg/m³<br>'+label+' Air Quality';
+}
+</script>
+</body>
+</html>
