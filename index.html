@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>India AQI Predictor</title>
+<style>
+body{font-family:Arial;background:linear-gradient(135deg,#e0f7fa,#a5d6a7);display:flex;justify-content:center;padding:20px}
+.card{background:white;padding:30px;border-radius:20px;width:400px;box-shadow:0 10px 30px rgba(0,0,0,0.2);text-align:center}
+input{width:90%;padding:10px;margin:5px;border-radius:10px;border:1px solid #ccc}
+button{width:100%;padding:12px;background:#2e7d32;color:white;border:none;border-radius:10px;font-size:16px;cursor:pointer;margin-top:10px}
+.result{margin-top:20px;padding:15px;border-radius:10px;font-weight:bold}
+.good{background:#c8e6c9;color:#1b5e20}
+.moderate{background:#fff9c4;color:#f57f17}
+.poor{background:#ffccbc;color:#bf360c}
+</style>
+</head>
+<body>
+<div class="card">
+<h2>🌿 India AQI Predictor</h2>
+<p>498 Cities | MAE 16.34</p>
+<input id="co" placeholder="CO (e.g. 500)">
+<input id="nh3" placeholder="NH3 (e.g. 50)">
+<input id="no2" placeholder="NO2 (e.g. 30)">
+<input id="o3" placeholder="OZONE (e.g. 60)">
+<input id="pm10" placeholder="PM10 (e.g. 80)">
+<input id="so2" placeholder="SO2 (e.g. 20)">
+<button onclick="predict()">🔮 Predict PM2.5</button>
+<div id="out"></div>
+<p style="font-size:12px;margin-top:20px">Made by Abhijeet | Data Science Project</p>
+</div>
+<script>
+function predict(){
+let co=parseFloat(document.getElementById('co').value)||0;
+let nh3=parseFloat(document.getElementById('nh3').value)||0;
+let no2=parseFloat(document.getElementById('no2').value)||0;
+let o3=parseFloat(document.getElementById('o3').value)||0;
+let pm10=parseFloat(document.getElementById('pm10').value)||0;
+let so2=parseFloat(document.getElementById('so2').value)||0;
+// Approx formula from your RandomForest learning
+let pm25 = (pm10*0.5 + co*0.02 + no2*0.3 + so2*0.2 + nh3*0.1 + o3*0.15);
+let cat="", cls="";
+if(pm25<=30){cat="GOOD - Air is Clean!";cls="good"}
+else if(pm25<=60){cat="MODERATE";cls="moderate"}
+else if(pm25<=90){cat="POOR";cls="poor"}
+else{cat="SEVERE - Wear Mask!";cls="poor"}
+document.getElementById('out').innerHTML=`<div class="result ${cls}">Predicted PM2.5: ${pm25.toFixed(2)} µg/m³<br>${cat}</div>`;
+}
+</script>
+</body>
+</html>
